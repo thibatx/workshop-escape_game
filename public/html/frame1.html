@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>frame1</title>
+  <title>SALLE 1</title>
+  <!-- Lien vers le CSS (on remonte d'un dossier avec ..) -->
   <link rel="stylesheet" href="../css/frame1.css">
 </head>
 <body>
-  <h1>enigme1</h1>
-  <p>Voici la première énigme</p>
-  <button onclick="salut()">réponse</button>
+  <h1>ENIGME 1</h1>
+  <h2>1+1 = ?</h2>
+  
+  <!-- Champ + bouton -->
+  <input type="text" id="reponse" placeholder="Écris quelque chose...">
+  <button onclick="valider()">REPONSE</button>
+  
+  <!-- Zone d'affichage du résultat -->
+  <p id="resultat"></p>
 
-<script src="../js/frame1.js"></script>
+  <!-- Lien vers le JavaScript -->
+  <script src="../js/frame1.js"></script>
 </body>
 </html>
