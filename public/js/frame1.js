@@ -2,7 +2,7 @@ function valider() {
   let saisie = document.getElementById("reponse").value; 
   let resultat = document.getElementById("resultat");
 
-  if (saisie.toLowerCase() === "2") {
+  if (saisie.toLowerCase() === "320 €") {
     resultat.textContent = "✅ Bravo ! C’est correct.";
     resultat.style.color = "green";
   } else {
