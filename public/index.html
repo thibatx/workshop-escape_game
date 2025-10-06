@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Jeu Coop</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 5em; }
+    button { font-size: 2em; padding: 0.5em 1em; }
+  </style>
+</head>
+<body>
+  <h1>Compteur coopératif</h1>
+  <p>Valeur : <span id="counter">0</span></p>
+  <button id="btn">+1</button>
+
+  <script>
+    const socket = io();
+
+    socket.on("state", (state) => {
+      document.getElementById("counter").textContent = state.counter;
+    });
+
+    document.getElementById("btn").onclick = () => {
+      socket.emit("increment");
+    };
+  </script>
+</body>
+</html>
