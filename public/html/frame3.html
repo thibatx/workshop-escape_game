@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SALLE 3 - Escape Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/frame3.css">
+</head>
+<body>
+  <div id="background-network"></div>
+  <div id="coffre-timer">
+    <svg id="timer-svg" width="100" height="100">
+      <circle id="timer-bg" cx="50" cy="50" r="45" stroke="#222" stroke-width="8" fill="none"/>
+      <circle id="timer-circle" cx="50" cy="50" r="45" stroke="#00fff7" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span id="timer">60:00</span>
+  </div>
+  <div class="container">
+    <h1>ENIGME 3 : Optimisation logistique</h1>
+    <h2>
+      Une entreprise doit livrer 3 clients différents avec 3 camions. Chaque client a une demande spécifique (en palettes) : <br>
+      Client A : 4 palettes<br>
+      Client B : 6 palettes<br>
+      Client C : 8 palettes<br><br>
+      Chaque camion peut transporter 6 palettes maximum.<br>
+      <b>Vous devez organiser les tournées pour livrer tous les clients en respectant la capacité des camions et en minimisant le nombre de trajets.</b><br><br>
+      <i>Faites glisser les palettes dans les camions et validez votre solution.</i>
+    </h2>
+    <div id="logistique-jeu">
+      <div class="clients">
+        <div class="client" data-client="A">
+          <div class="client-label">Client A</div>
+          <div class="palettes" id="palettes-A"></div>
+        </div>
+        <div class="client" data-client="B">
+          <div class="client-label">Client B</div>
+          <div class="palettes" id="palettes-B"></div>
+        </div>
+        <div class="client" data-client="C">
+          <div class="client-label">Client C</div>
+          <div class="palettes" id="palettes-C"></div>
+        </div>
+      </div>
+      <div class="camions">
+        <div class="camion" data-camion="1">
+          <div class="camion-label">Camion 1</div>
+          <div class="dropzone" id="camion-1"></div>
+        </div>
+        <div class="camion" data-camion="2">
+          <div class="camion-label">Camion 2</div>
+          <div class="dropzone" id="camion-2"></div>
+        </div>
+        <div class="camion" data-camion="3">
+          <div class="camion-label">Camion 3</div>
+          <div class="dropzone" id="camion-3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="input-area">
+      <button onclick="validerLogistique()">VALIDER</button>
+    </div>
+    <p id="resultat"></p>
+  </div>
+  <script src="../js/network-bg.js"></script>
+  <script src="../js/frame3.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* Styles spécifiques à l'énigme logistique (frame3) */
+#logistique-jeu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 32px 0 24px 0;
+}
+.clients, .camions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.client, .camion {
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 16px 18px;
+  min-width: 120px;
+  box-shadow: 0 2px 8px 0 rgba(30,198,230,0.08);
+  border: 1.5px solid rgba(30,198,230,0.13);
+}
+.client-label, .camion-label {
+  font-weight: 700;
+  color: #1ec6e6;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.palettes, .dropzone {
+  min-height: 38px;
+  min-width: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: rgba(30,198,230,0.07);
+  border-radius: 8px;
+  padding: 8px 6px;
+  margin-top: 4px;
+  border: 1px dashed #1ec6e6;
+  transition: background 0.2s;
+}
+.palette {
+  background: linear-gradient(120deg, #1ec6e6 60%, #fff 100%);
+  color: #0a0a0a;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: grab;
+  box-shadow: 0 1px 4px 0 rgba(30,198,230,0.15);
+  border: 1px solid #1ec6e6;
+  user-select: none;
+  font-size: 1em;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.palette:active {
+  box-shadow: 0 2px 8px 0 #1ec6e6;
+  background: #fff;
+}
