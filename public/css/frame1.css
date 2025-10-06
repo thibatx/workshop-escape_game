@@ -56,13 +56,20 @@ body {
 .container {
   max-width: 800px;
   margin: 50px auto;
-  padding: 30px;
-  background: rgba(0,0,0,0.75); /* fond sombre semi-transparent */
-  border: 2px solid #0d6583;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #0d6583;
+  padding: 32px 36px;
+  background: rgba(20, 40, 60, 0.35);
+  border: 1.5px solid rgba(30, 198, 230, 0.35);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px 0 rgba(30,198,230,0.12), 0 1.5px 8px 0 rgba(30,198,230,0.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: relative;
   z-index: 2;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+.container:hover {
+  box-shadow: 0 8px 40px 0 rgba(30,198,230,0.22), 0 1.5px 16px 0 rgba(30,198,230,0.18);
+  border: 1.5px solid #1ec6e6;
 }
 
 /* ======================= */
@@ -222,7 +229,7 @@ p#resultat {
 }
 
 /* Fond animé de particules */
-#background-anim {
+#background-network {
   position: fixed;
   top: 0;
   left: 0;
@@ -230,15 +237,5 @@ p#resultat {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  background: transparent;
-}
-
-canvas.particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
+  background: #0a0a0a;
 }
