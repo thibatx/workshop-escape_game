@@ -2,28 +2,54 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Jeu Coop</title>
+  <title>Jeu Coop - Multi-salles</title>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; margin-top: 5em; }
-    button { font-size: 2em; padding: 0.5em 1em; }
+    #game { display: none; }
   </style>
 </head>
 <body>
-  <h1>Compteur coopératif</h1>
-  <p>Valeur : <span id="counter">0</span></p>
-  <button id="btn">+1</button>
+  <h1>Jeu coopératif multijoueur</h1>
+
+  <div id="lobby">
+    <p>Entrez le nom d'une salle :</p>
+    <input id="roomInput" placeholder="ex: salle1" />
+    <button id="joinBtn">Rejoindre</button>
+  </div>
+
+  <div id="game">
+    <p>Salle actuelle : <span id="roomName"></span></p>
+    <p>Compteur : <span id="counter">0</span></p>
+    <button id="btn">+1</button>
+    <p id="messages"></p>
+  </div>
 
   <script>
     const socket = io();
+    let currentRoom = null;
+
+    document.getElementById("joinBtn").onclick = () => {
+      const roomName = document.getElementById("roomInput").value.trim();
+      if (!roomName) return alert("Nom de salle requis !");
+      currentRoom = roomName;
+      socket.emit("joinRoom", roomName);
+      document.getElementById("lobby").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      document.getElementById("roomName").textContent = roomName;
+    };
+
+    document.getElementById("btn").onclick = () => {
+      if (currentRoom) socket.emit("increment", currentRoom);
+    };
 
     socket.on("state", (state) => {
       document.getElementById("counter").textContent = state.counter;
     });
 
-    document.getElementById("btn").onclick = () => {
-      socket.emit("increment");
-    };
+    socket.on("message", (msg) => {
+      document.getElementById("messages").textContent = msg;
+    });
   </script>
 </body>
 </html>
