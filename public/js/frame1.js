@@ -39,10 +39,10 @@ function majCercle() {
   let offset = CERCLE_C * (1 - ratio);
   timerCircle.setAttribute("stroke-dashoffset", offset);
   // Couleur dynamique sans ombre
-  if (tempsRestant <= 30) {
+  if (tempsRestant <= 300) {
     timerCircle.setAttribute("stroke", "#ff0040");
     timerCircle.style.filter = "none";
-  } else if (tempsRestant <= 120) {
+  } else if (tempsRestant <= 900) {
     timerCircle.setAttribute("stroke", "#ffae00");
     timerCircle.style.filter = "none";
   } else {
