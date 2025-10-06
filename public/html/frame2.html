@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SALLE 1</title>
+  <!-- Lien vers le CSS (gère aussi le fond d'écran) -->
+  <link rel="stylesheet" href="../css/frame2.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Bombe timer en haut à droite */
+    .bombe {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #331111 0%, #5a0d0d 60%);
+      color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 -8px 20px rgba(0,0,0,0.35);
+      text-align: center;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .bombe .time {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .bombe::before {
+      content: "";
+      position: absolute;
+      top: -18px;
+      right: 14px;
+      width: 6px;
+      height: 22px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #222 0%, #d49a2a 100%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      transform-origin: center bottom;
+    }
+    .bombe .spark {
+      position: absolute;
+      top: -26px;
+      right: 10px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0%, #ffd86b 25%, rgba(255,140,0,0.9) 50%, rgba(255,80,0,0.0) 60%);
+      filter: blur(0.4px);
+      animation: flicker 700ms linear infinite;
+    }
+    @keyframes flicker {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-2px) scale(0.9); opacity: 0.8; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .bombe.warn {
+      animation: pulse 900ms infinite;
+      box-shadow: 0 0 24px rgba(255,40,40,0.5), inset 0 -8px 20px rgba(255,40,40,0.15);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    .bombe.exploded {
+      animation: explode 1000ms forwards ease-out;
+      background: radial-gradient(circle at center, #ff3b3b 0%, #ffdd33 30%, rgba(255,120,0,0.7) 60%, rgba(255,140,0,0.0) 100%);
+      box-shadow: 0 0 60px rgba(255,80,0,0.6), 0 0 120px rgba(255,120,0,0.5) inset;
+    }
+    @keyframes explode {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+      30% { transform: scale(1.8) rotate(-15deg); filter: blur(2px); }
+      60% { transform: scale(2.5) rotate(20deg); filter: blur(4px); }
+      100% { transform: scale(0.2) rotate(60deg); opacity: 0; filter: blur(8px); }
+    }
+
+    .blast-msg {
+      position: fixed;
+      top: 30px;
+      right: 120px;
+      transform: translateY(-8px);
+      font-weight: 800;
+      color: #ff3b3b;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+    .blast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animation pour la question qui explose */
+    .question {
+      font-size: 24px;
+      margin: 50px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      position: relative;
+    }
+    .question.exploded {
+      animation: questionExplode 1000ms forwards ease-out;
+    }
+    @keyframes questionExplode {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      30% { transform: scale(1.5) rotate(-10deg); opacity: 1; }
+      60% { transform: scale(2.2) rotate(15deg); opacity: 0.7; }
+      100% { transform: scale(0.1) rotate(45deg); opacity: 0; }
+    }
+
+    @media (max-width: 420px) {
+      .bombe { width: 64px; height: 64px; }
+      .bombe .time { font-size: 14px; }
+      .question { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ENIGME 1</h1>
+  <h2><br>Sur le premier coffre : « J’avais 10 pièces, j’en perds 8. »<br>
+      Sur le deuxième coffre : « J’ai 5 billets, je les partage : 5 ÷ 5. »<br>
+      Sur le troisième coffre : « J’achète 2 lingots à 7 pièces chacun. »<br>
+      Sur le quatrième coffre : « Je cache 20 lingots, mais on m’en retrouve 3. »<br>
+      Sur le cinquième coffre : « Je trouve 3 sacs de 7 pièces chacun. »<br>
+      Sur le sixième coffre : « J’avais 12 pièces, j’en donne 7. »<br>
+      Indice : Nous recherchons un mot.</h2>
+
+  <!-- Champ + bouton -->
+  <input type="text" id="reponse" placeholder="Écris le mot secret">
+  <button onclick="valider()">REPONSE</button>
+
+  <!-- Zone d'affichage du résultat -->
+  <p id="resultat"></p>
+
+ <!-- …garde le reste de ton code identique jusqu'au body… -->
+
+<!-- Bombe timer -->
+<div class="bombe" id="bombeTimer" data-seconds="10">
+    <div class="spark"></div>
+    <div class="time" id="bombeTime">--:--</div>
+  </div>
+  
+  <div class="blast-msg" id="blastMsg">💥 BOOM!</div>
+  
+  <!-- Explosion page -->
+  <div id="explosionPage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at center, #ff3b3b 0%, #ffdd33 50%, rgba(255,140,0,0.7) 70%, rgba(255,0,0,0) 100%); z-index:9998; pointer-events:none;"></div>
+  
+  <!-- Lien vers le JavaScript -->
+  <script src="../js/frame2.js"></script>
+  
+  <script>
+  (function(){
+    const el = document.getElementById('bombeTimer');
+    const out = document.getElementById('bombeTime');
+    const blast = document.getElementById('blastMsg');
+    const question = document.querySelector('h1, h2');
+    const explosionPage = document.getElementById('explosionPage');
+    let remaining = parseInt(el.getAttribute('data-seconds')) || 10;
+    let running = true;
+  
+    function formatTime(s){
+      const mm = Math.floor(s / 60).toString().padStart(2,'0');
+      const ss = Math.floor(s % 60).toString().padStart(2,'0');
+      return mm + ':' + ss;
+    }
+  
+    function tick(){
+      if(!running) return;
+      out.textContent = formatTime(remaining);
+      if(remaining <= 10 && remaining > 0){
+        el.classList.add('warn');
+      }
+      if(remaining <= 0){
+        el.classList.remove('warn');
+        el.classList.add('exploded');
+        question.classList.add('exploded');
+        blast.classList.add('show');
+        explosionPage.style.display = 'block';
+        explosionPage.style.animation = 'pageBoom 1.2s forwards';
+        setTimeout(()=>{ alert('Le temps est écoulé, vous avez perdu'); }, 1200);
+        running = false;
+        return;
+      }
+      remaining -= 1;
+    }
+  
+    out.textContent = formatTime(remaining);
+    const intervalId = setInterval(()=>{ tick(); if(!running){ clearInterval(intervalId); } }, 1000);
+  
+  })();
+  </script>
+  
+  <style>
+  @keyframes pageBoom {
+    0% { opacity:0; transform: scale(0.5); }
+    30% { opacity:0.8; transform: scale(1.2); }
+    60% { opacity:1; transform: scale(1.5); }
+    100% { opacity:0; transform: scale(2); }
+  }
+  </style>
+  
